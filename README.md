@@ -1,6 +1,6 @@
 # Jev vs Haiku: Input Guardrail Benchmark
 
-Benchmarking **TypeSafe Jev** (a general-purpose judgment engine) against **Claude Haiku 4.5** (a general-purpose LLM) as input safety classifiers for enterprise AI systems.
+Benchmarking **TypeSafe Jev** (a System One model optimized for automation) against **Claude Haiku 4.5** (a general-purpose LLM) as input safety classifiers for enterprise AI systems.
 
 ## What This Tests
 
