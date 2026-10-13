@@ -56,20 +56,20 @@ cp .env.example .env
 ## Usage
 
 ```bash
-# Dry run (3 cases, verbose output)
+# Dry run (verbose output for small runs)
 uv run python benchmark.py -n 2
 
 # Quick run
 uv run python benchmark.py -n 100
 
-# Medium run
-uv run python benchmark.py -n 300
-
-# Full benchmark (1,500 cases)
+# Default run (1,000 cases)
 uv run python benchmark.py
+
+# Full benchmark (all available prompts from each dataset)
+uv run python benchmark.py --all
 ```
 
-The `-n` flag maintains proportional category splits at any scale.
+The `-n` flag controls how many test cases to run (default: 1,000) and maintains proportional category splits (53% attack / 13% evasion / 33% benign) at any scale. Use `--all` to run against every available prompt.
 
 ## Output
 
@@ -80,6 +80,8 @@ The benchmark generates three files in `results/`:
 - **`detail.csv`** - Flat CSV for further analysis
 
 ## Sample Results (n=300)
+
+> Cost estimates use Jev input pricing ($0.042/1M tokens) and Anthropic Haiku 4.5 pricing ($1.00/1M input, $5.00/1M output) as of October 2026.
 
 ```
 Detection rate:      Jev 91%    vs  Haiku 97%

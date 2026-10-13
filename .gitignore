@@ -15,5 +15,10 @@ wheels/
 # Environment variables / secrets
 .env
 
+# Raw result logs
+*.jsonl
+
 # Internal notes
 LEARNINGS.md
+WORLD_CLASS_REVIEW.md
+WORLD_CLASS_REVIEW_FOCUS.md
