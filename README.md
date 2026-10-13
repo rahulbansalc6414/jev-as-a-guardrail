@@ -1,6 +1,6 @@
 # Jev vs Haiku: Input Guardrail Benchmark
 
-Benchmarking **TypeSafe Jev** (a lightweight judgment model) against **Claude Haiku 4.5** (a general-purpose LLM) as input safety classifiers for enterprise AI systems.
+Benchmarking **TypeSafe Jev** (a general-purpose judgment engine) against **Claude Haiku 4.5** (a general-purpose LLM) as input safety classifiers for enterprise AI systems.
 
 ## What This Tests
 
@@ -15,11 +15,11 @@ The benchmark measures detection rate, false positive rate, latency, and cost ac
 
 | Category | Dataset | Description |
 |----------|---------|-------------|
-| **Attack** (800) | [Lshafii/Jailbreak-PromptBank](https://huggingface.co/datasets/Lshafii/Jailbreak-PromptBank) | Curated jailbreak prompts from AdvBench, HarmBench, StrongReject, GPT-Fuzzer, and others |
-| **Evasion** (200) | [Mindgard/evaded-prompt-injection-and-jailbreak-samples](https://huggingface.co/datasets/Mindgard/evaded-prompt-injection-and-jailbreak-samples) | Adversarially modified prompts designed to bypass guardrails |
-| **Benign** (500) | [furonghuang-lab/PHTest](https://huggingface.co/datasets/furonghuang-lab/PHTest) | Pseudo-harmful prompts that look suspicious but are actually harmless |
+| **Attack** | [Lshafii/Jailbreak-PromptBank](https://huggingface.co/datasets/Lshafii/Jailbreak-PromptBank) | Curated jailbreak prompts from AdvBench, HarmBench, StrongReject, GPT-Fuzzer, and others |
+| **Evasion** | [Mindgard/evaded-prompt-injection-and-jailbreak-samples](https://huggingface.co/datasets/Mindgard/evaded-prompt-injection-and-jailbreak-samples) | Adversarially modified prompts designed to bypass guardrails |
+| **Benign** | [furonghuang-lab/PHTest](https://huggingface.co/datasets/furonghuang-lab/PHTest) | Pseudo-harmful prompts that look suspicious but are actually harmless |
 
-Total: 1,500 test cases (scalable with `-n` flag).
+The `-n` flag scales each category proportionally (53% attack / 13% evasion / 33% benign). Attack prompts are deduplicated before sampling. Dataset revisions are pinned for reproducibility.
 
 ## How It Works
 
@@ -69,26 +69,31 @@ uv run python benchmark.py
 uv run python benchmark.py --all
 ```
 
-The `-n` flag controls how many test cases to run (default: 1,000) and maintains proportional category splits (53% attack / 13% evasion / 33% benign) at any scale. Use `--all` to run against every available prompt.
+The `-n` flag controls how many test cases to run (default: 1,000) and maintains proportional category splits at any scale. Use `--all` to run against every available prompt.
 
 ## Output
 
-The benchmark generates three files in `results/`:
+Each run creates a timestamped directory under `results/` (e.g., `results/1000-run-20261013-162726/`) containing:
 
-- **`raw_results.jsonl`** - Every test case with both systems' raw scores (checkpointed every 50 calls)
-- **`summary.json`** - Detection rates, latency percentiles, cost, confusion matrices, head-to-head comparison
-- **`detail.csv`** - Flat CSV for further analysis
+- **`summary.json`** -- Detection rates, latency percentiles, cost, confusion matrices, head-to-head comparison
+- **`detail.csv`** -- Flat CSV with per-case results for further analysis
+- **`raw_results.jsonl`** -- Every test case with both systems' raw scores (checkpointed every 50 calls)
 
-## Sample Results (n=300)
+## Results (n=1,000)
 
 > Cost estimates use Jev input pricing ($0.042/1M tokens) and Anthropic Haiku 4.5 pricing ($1.00/1M input, $5.00/1M output) as of October 2026.
 
-```
-Detection rate:      Jev 91%    vs  Haiku 97%
-False positive rate: Jev 11%    vs  Haiku 19%
-Median latency:      Jev 333ms  vs  Haiku 2,148ms
-Cost per 1K calls:   Jev $0.03  vs  Haiku $1.86
-```
+| Metric | Jev | Haiku |
+|---|---|---|
+| Detection rate (overall) | 91.9% | 96.6% |
+| Detection (jailbreak) | 95.3% | 97.2% |
+| Detection (evasion) | 78.2% | 94.0% |
+| False positive rate | 9.6% | 14.1% |
+| Accuracy | 91.4% | 93.0% |
+| Median latency | 328ms | 2,066ms |
+| Cost per 1K calls | $0.03 | $1.87 |
+
+Full analysis: [`results/1000-run-20261013-162726/ANALYSIS.md`](results/1000-run-20261013-162726/ANALYSIS.md)
 
 ## License
 
