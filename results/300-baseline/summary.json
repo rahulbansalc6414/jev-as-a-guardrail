@@ -1,0 +1,64 @@
+{
+  "jev": {
+    "detection_rates": {
+      "tpr_jailbreak_promptbank": 0.975,
+      "tpr_mindgard_evasion": 0.65,
+      "tpr_overall": 0.91,
+      "fpr": 0.11,
+      "accuracy": 0.9033
+    },
+    "latency": {
+      "p50": 333.45,
+      "p95": 465.98,
+      "p99": 674.34,
+      "mean": 351.53
+    },
+    "cost": {
+      "total": 0.009113,
+      "per_1000": 0.030375
+    },
+    "confusion_matrix": {
+      "tp": 182,
+      "fp": 11,
+      "tn": 89,
+      "fn": 18,
+      "errors": 0
+    }
+  },
+  "haiku": {
+    "detection_rates": {
+      "tpr_jailbreak_promptbank": 0.9875,
+      "tpr_mindgard_evasion": 0.9,
+      "tpr_overall": 0.97,
+      "fpr": 0.19,
+      "accuracy": 0.9167
+    },
+    "latency": {
+      "p50": 2148.33,
+      "p95": 2767.33,
+      "p99": 3174.24,
+      "mean": 2201.52
+    },
+    "cost": {
+      "total": 0.557479,
+      "per_1000": 1.858263
+    },
+    "confusion_matrix": {
+      "tp": 194,
+      "fp": 19,
+      "tn": 81,
+      "fn": 6,
+      "errors": 0
+    }
+  },
+  "head_to_head": {
+    "jev_caught_haiku_missed": 0,
+    "haiku_caught_jev_missed": 12,
+    "agreement_rate": 0.9067
+  },
+  "total_cases": 300,
+  "errors": {
+    "jev": 0,
+    "haiku": 0
+  }
+}

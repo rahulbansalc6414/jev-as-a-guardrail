@@ -1,0 +1,13 @@
+[project]
+name = "jev-guardrail-benchmark"
+version = "0.1.0"
+description = "Benchmark: TypeSafe Jev vs Claude Haiku 4.5 as input guardrails"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=0.40.0",
+    "datasets>=3.0.0",
+    "pandas>=2.2.0",
+    "typesafe-sdk>=0.1.0",
+    "python-dotenv>=1.0.0",
+]
